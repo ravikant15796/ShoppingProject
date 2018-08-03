@@ -1,7 +1,7 @@
    <div class="container">
-      <app-header></app-header>
-      <app-recipes></app-recipes>
-      <app-shopping-list></app-shopping-list>
+      <app-header (selectedFeature)="navigateUrl($event)" ></app-header>
+      <app-recipes *ngIf = "loadedFeature==='recipe'"></app-recipes>
+      <app-shopping-list *ngIf = "loadedFeature!=='recipe'"></app-shopping-list>
     </div> 
 
  
