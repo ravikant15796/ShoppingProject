@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+   loadedFeature = 'recipe';
+ navigateUrl(data:string)
+ {
+
+   this.loadedFeature = data;  
+
+ }
+
+
 }
