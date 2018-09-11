@@ -1,9 +1,12 @@
    <div class="container">
-      <app-header  ></app-header>
-      <app-recipes  ></app-recipes>
-      <app-shopping-list  ></app-shopping-list>
+      <div class="row">
+        <div class="col-md-12">
+          <app-header (selectedFeature)="navigateUrl($event)" ></app-header>
+           <router-outlet></router-outlet>
+        </div>
+      </div>
     </div> 
-    <!-- (selectedFeature)="navigateUrl($event)" 
+    <!-- 
     *ngIf = "loadedFeature==='recipe'"
     *ngIf = "loadedFeature!=='recipe'" 
      -->
