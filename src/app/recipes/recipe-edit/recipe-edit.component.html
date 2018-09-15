@@ -9,7 +9,9 @@
                       type="submit">Save</button>
                   </div>
                    <div class="col-xs-1">
-                      <button class="btn btn-danger" type="button">Cancel</button>
+                      <button class="btn btn-danger" type="button"
+                       (click)="onCancelRecipe()"
+                      >Cancel</button>
                    </div>
                </div>
             </div>
@@ -32,13 +34,14 @@
                         <input type="text" 
                         id="imagepath"
                         formControlName="imagepath"
+                        #imagepath
                         class="form-control">
                       </div>
                 </div>
             </div>
             <div class="row">
               <div class="col-xs-12">
-                 <img src="" alt="" class="img-responsive">
+                 <img [src]="imagepath.value" alt="" class="img-responsive">
               </div>
             </div>
             
@@ -72,7 +75,8 @@
                         formControlName="amount">
                       </div>
                       <div class="col-xs-2">
-                          <button class="btn btn-danger" type="button">X</button>
+                          <button class="btn btn-danger" 
+                          type="button" (click)="onDeleteIngred(j)">X</button>
                          </div>
                     </div>
                     <hr>
