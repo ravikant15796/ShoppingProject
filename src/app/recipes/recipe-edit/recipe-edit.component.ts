@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { RecipeService } from '../recipe.service';
 import { Ingredient } from '../../shared/ingredients.model';
+import { Recipe } from '../recipe.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -40,8 +41,12 @@ constructor(private route:ActivatedRoute , private recipeService : RecipeService
         for(let ing of recipe.ingredients){
           recipeIngredient.push(
             new FormGroup({
-              'name': new FormControl(ing.name),
-              'amount': new FormControl(ing.amount)
+              'name': new FormControl(ing.name ,Validators.required),
+              'amount': new FormControl(ing.amount,[
+                Validators.required,
+              Validators.pattern(/^[1-9]+[0-9]*$/),
+              ]
+              )
             })
           )
         }
@@ -49,15 +54,24 @@ constructor(private route:ActivatedRoute , private recipeService : RecipeService
 
     }
     this.recipeForm=new FormGroup({
-      'name': new FormControl(recipeName),
-      'imagepath': new FormControl(recipeImagepath),
-      'description':  new FormControl(recipeDescription),
+      'name': new FormControl(recipeName , Validators.required),
+      'imagepath': new FormControl(recipeImagepath,Validators.required),
+      'description':  new FormControl(recipeDescription,Validators.required),
       'ingredients' : recipeIngredient
     });
   }
   onSubmit(){
-    
-     console.log(this.recipeForm);
+    const newRecipe = new Recipe(this.recipeForm.value['name'],
+    this.recipeForm.value['description'],
+    this.recipeForm.value['imagepath'],
+    this.recipeForm.value['ingredients'])
+    if(this.editMode){
+    this.recipeService.updateRecipe(this.id ,newRecipe);
+    }
+    else{
+      this.recipeService.addRecipe(newRecipe);
+    }
+     
   }
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(
